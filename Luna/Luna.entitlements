@@ -3,11 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>com.apple.developer.healthkit</key>
-	<true/>
-	<key>com.apple.developer.healthkit.access</key>
-	<array>
-		<string>health-records</string>
-	</array>
+	<false/>
 </dict>
 </plist>
-
