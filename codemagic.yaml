@@ -4,7 +4,7 @@
     max_build_duration: 120
     instance_type: mac_mini_m1
     integrations:
-      app_store_connect: "lena-key" # <-- APIKEY NAME FROM CODEMAGIC
+      app_store_connect: "lena-key-0" # <-- APIKEY NAME FROM CODEMAGIC
     environment:
       ios_signing:
         distribution_type: app_store
