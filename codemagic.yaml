@@ -4,15 +4,15 @@
     max_build_duration: 120
     instance_type: mac_mini_m1
     integrations:
-      app_store_connect: "lena-key-0" # <-- APIKEY NAME FROM CODEMAGIC
+      app_store_connect: egl # <-- APIKEY NAME FROM CODEMAGIC
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.didierjoubert.tavloniverecoverynight  # <-- Put the Bundle ID without ""
+        bundle_identifier: com.handamehan.eglgamsup  # <-- Put the Bundle ID without ""
       vars:
-        BUNDLE_ID: "com.didierjoubert.tavloniverecoverynight" # <-- Put the Bundle ID
-        XCODE_SCHEME: "Luna" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
-        APP_STORE_APPLE_ID: 6755245887 # <-- Put the Apple ID from Appstoreconnect
+        BUNDLE_ID: "com.handamehan.eglgamsup" # <-- Put the Bundle ID
+        XCODE_SCHEME: "EGL Gaming Support" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
+        APP_STORE_APPLE_ID: 6756518260 # <-- Put the Apple ID from Appstoreconnect
       xcode: latest
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
@@ -22,11 +22,11 @@
           #!/bin/sh
           cd $CM_BUILD_DIR
           LATEST_BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID")
-          agvtool new-version -all 3
+          agvtool new-version -all $(($LATEST_BUILD_NUMBER + 1))
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
-            --project "Luna.xcodeproj" \
+            --project "EGL Gaming Support.xcodeproj" \
             --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
