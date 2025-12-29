@@ -1,18 +1,18 @@
- workflows:
+workflows:
   name-workflow:
     name: WorkSide
     max_build_duration: 120
     instance_type: mac_mini_m1
     integrations:
-      app_store_connect: egl # <-- APIKEY NAME FROM CODEMAGIC
+      app_store_connect: "Brozone:GentleDen"
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.handamehan.eglgamsup  # <-- Put the Bundle ID without ""
+        bundle_identifier: com.brozonegentle.den
       vars:
-        BUNDLE_ID: "com.handamehan.eglgamsup" # <-- Put the Bundle ID
-        XCODE_SCHEME: "EGL Gaming Support" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
-        APP_STORE_APPLE_ID: 6756518260 # <-- Put the Apple ID from Appstoreconnect
+        BUNDLE_ID: "com.brozonegentle.den"
+        XCODE_SCHEME: "TheBrozoneGentleDen"
+        APP_STORE_APPLE_ID: 6756718281
       xcode: latest
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
@@ -26,7 +26,7 @@
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
-            --project "EGL Gaming Support.xcodeproj" \
+            --project "TheBrozoneGentleDen.xcodeproj" \
             --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
@@ -39,7 +39,7 @@
         submit_to_app_store: true
       email:
         recipients:
-          - derasik3000@adforcegroup.com   # <-- Put the Email for getting info about result of Build
+          - "derasik3000@adforcegroup.com"
         notify:
           success: true
           failure: true

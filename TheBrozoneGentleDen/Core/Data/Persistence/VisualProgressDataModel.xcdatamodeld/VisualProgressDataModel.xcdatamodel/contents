@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="SphereEntity" representedClassName="CategoryRecord" syncable="YES">
+        <attribute name="aetherCoverImagePath" optional="YES" attributeType="String"/>
+        <attribute name="celestialRadarVisibility" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="cosmicKindValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="galaxyUpdatedTimestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="nebulaTitleText" attributeType="String"/>
+        <attribute name="orbitalSortPosition" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="stellarCreatedTimestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="voidArchivedFlag" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="zephyrId" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="etherealMilestoneNodes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MilestoneEntity" inverseName="cosmicSphereAnchor" inverseEntity="MilestoneEntity"/>
+        <relationship name="quantumProgressLinks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ProgressEntity" inverseName="cosmicSphereLink" inverseEntity="ProgressEntity"/>
+    </entity>
+    <entity name="ProgressEntity" representedClassName="AdvancementRecord" syncable="YES">
+        <attribute name="chronicleNoteContent" optional="YES" attributeType="String"/>
+        <attribute name="galaxyUpdatedTimestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="luminousAfterScore" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="morphicTypeValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pinnacleFixedFlag" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="prismaticTitleText" optional="YES" attributeType="String"/>
+        <attribute name="stellarCreatedTimestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="temporalEventMoment" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="zephyrId" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="cosmicSphereLink" maxCount="1" deletionRule="Nullify" destinationEntity="SphereEntity" inverseName="quantumProgressLinks" inverseEntity="SphereEntity"/>
+        <relationship name="semanticLabelTokens" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TagEntity" inverseName="relatedProgressEntries" inverseEntity="TagEntity"/>
+        <relationship name="spectrumImageFragments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PhotoEntity" inverseName="cosmicProgressAnchor" inverseEntity="PhotoEntity"/>
+    </entity>
+    <entity name="PhotoEntity" representedClassName="ImageRecord" syncable="YES">
+        <attribute name="dimensionalRoleTag" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="miniatureThumbnailPath" optional="YES" attributeType="String"/>
+        <attribute name="pixelHeightDimension" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pixelWidthDimension" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sequentialOrderIndex" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="temporalCaptureInstant" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="vortexStoragePath" attributeType="String"/>
+        <attribute name="zephyrId" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="cosmicProgressAnchor" maxCount="1" deletionRule="Nullify" destinationEntity="ProgressEntity" inverseName="spectrumImageFragments" inverseEntity="ProgressEntity"/>
+    </entity>
+    <entity name="TagEntity" representedClassName="LabelRecord" syncable="YES">
+        <attribute name="lexicalNameString" attributeType="String"/>
+        <attribute name="stellarCreatedTimestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="zephyrId" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="relatedProgressEntries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ProgressEntity" inverseName="semanticLabelTokens" inverseEntity="ProgressEntity"/>
+    </entity>
+    <entity name="MilestoneEntity" representedClassName="AchievementRecord" syncable="YES">
+        <attribute name="chronicleNoteContent" optional="YES" attributeType="String"/>
+        <attribute name="connectedEntryReference" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="epicTitleText" attributeType="String"/>
+        <attribute name="temporalAchievementDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="zephyrId" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="cosmicSphereAnchor" maxCount="1" deletionRule="Nullify" destinationEntity="SphereEntity" inverseName="etherealMilestoneNodes" inverseEntity="SphereEntity"/>
+    </entity>
+</model>
+
