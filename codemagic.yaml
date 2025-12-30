@@ -4,15 +4,15 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m1
     integrations:
-      app_store_connect: "Belatrix"
+      app_store_connect: "IDer:PaceScaler"
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.brozonegentle.den
+        bundle_identifier: com.eduardbaars.pacescaler
       vars:
-        BUNDLE_ID: "com.brozonegentle.den"
-        XCODE_SCHEME: "TheBrozoneGentleDen"
-        APP_STORE_APPLE_ID: 6756718281
+        BUNDLE_ID: "com.eduardbaars.pacescaler"
+        XCODE_SCHEME: "PaceScaler"
+        APP_STORE_APPLE_ID: 6755608981
       xcode: latest
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
@@ -26,7 +26,7 @@ workflows:
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
-            --project "TheBrozoneGentleDen.xcodeproj" \
+            --project "PaceScaler.xcodeproj" \
             --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
