@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ZaxorTemplate" representedClassName="ZaxorTemplate" syncable="YES">
+        <attribute name="createdAtUTC" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="defaultDurationMin" attributeType="Integer 16" defaultValueString="10" usesScalarValueType="YES"/>
+        <attribute name="defaultTargetAttempts" attributeType="Integer 16" defaultValueString="40" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="typeRaw" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="QuixoSession" representedClassName="QuixoSession" syncable="YES">
+        <attribute name="autoAdvance" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="finishedAtUTC" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="moodRating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startedAtUTC" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="statusRaw" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="vexitRuns" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="VexitRun" inverseName="quixoSession" inverseEntity="VexitRun"/>
+    </entity>
+    <entity name="VexitRun" representedClassName="VexitRun" syncable="YES">
+        <attribute name="actualDurationSec" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="attemptsTotal" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="conversionPct" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="durationMin" attributeType="Integer 16" defaultValueString="10" usesScalarValueType="YES"/>
+        <attribute name="finishedAtUTC" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="orderIndex" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pacePerMin" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+        <attribute name="sessionId" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="startedAtUTC" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="successCount" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="targetAttempts" attributeType="Integer 16" defaultValueString="40" usesScalarValueType="YES"/>
+        <attribute name="typeRaw" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="quixoSession" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="QuixoSession" inverseName="vexitRuns" inverseEntity="QuixoSession"/>
+        <relationship name="ryxelAttempts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RyxelAttempt" inverseName="vexitRun" inverseEntity="RyxelAttempt"/>
+    </entity>
+    <entity name="RyxelAttempt" representedClassName="RyxelAttempt" syncable="YES">
+        <attribute name="blockRunId" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="kindRaw" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="labelRaw" optional="YES" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="timestampUTC" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="vexitRun" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VexitRun" inverseName="ryxelAttempts" inverseEntity="VexitRun"/>
+    </entity>
+    <entity name="NyxelSettings" representedClassName="NyxelSettings" syncable="YES">
+        <attribute name="createdAtUTC" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="currentStreak" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="defaultTargetsJSON" optional="YES" attributeType="Binary"/>
+        <attribute name="endBeepEnabled" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="hapticsEnabled" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="lastTrainingDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="longestStreak" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="notificationsEnabled" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="notificationHour" optional="YES" attributeType="Integer 16" defaultValueString="9" usesScalarValueType="YES"/>
+        <attribute name="notificationMinute" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="onboardingCompleted" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="unlockedBadgesJSON" optional="YES" attributeType="Binary"/>
+        <attribute name="updatedAtUTC" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="weeklyGoalAttempts" optional="YES" attributeType="Integer 32" defaultValueString="500" usesScalarValueType="YES"/>
+        <attribute name="weeklyProgressAttempts" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="weekStartDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+</model>
+
