@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CDFoodIngredient" representedClassName="CDFoodIngredient" syncable="YES" codeGenerationType="class">
+        <attribute name="categoryRaw" attributeType="String"/>
+        <attribute name="descriptionHint" optional="YES" attributeType="String"/>
+        <attribute name="identifier" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isUserCreated" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="titleText" attributeType="String"/>
+    </entity>
+    <entity name="CDMealSlotRecord" representedClassName="CDMealSlotRecord" syncable="YES" codeGenerationType="class">
+        <attribute name="dayIdentifier" attributeType="String"/>
+        <attribute name="ingredientRef" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="portionAmount" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="recordIdentifier" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="timeSlotRaw" attributeType="String"/>
+    </entity>
+    <entity name="CDSavedTemplate" representedClassName="CDSavedTemplate" syncable="YES" codeGenerationType="class">
+        <attribute name="creationTimestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="itemsPayload" attributeType="Binary"/>
+        <attribute name="noteText" optional="YES" attributeType="String"/>
+        <attribute name="templateIdentifier" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="templateTitle" attributeType="String"/>
+        <attribute name="timeSlotRaw" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="CDDailyMetrics" representedClassName="CDDailyMetrics" syncable="YES" codeGenerationType="class">
+        <attribute name="averageMetric" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="dayIdentifier" attributeType="String"/>
+        <attribute name="eveningMetric" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="exportTimestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="hasGoldStatus" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="morningMetric" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="noonMetric" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="snackMetric" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="CDUserConfiguration" representedClassName="CDUserConfiguration" syncable="YES" codeGenerationType="class">
+        <attribute name="configIdentifier" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="enableAutoTimeSlot" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="enableHapticFeedback" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="enableHighContrast" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+    </entity>
+</model>
+
