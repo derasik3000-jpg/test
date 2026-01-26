@@ -4,15 +4,15 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m1
     integrations:
-      app_store_connect: "Stenor:Bulano" # <-- APIKEY NAME FROM CODEMAGIC
+      app_store_connect: "Simple:YourTier" # <-- APIKEY NAME FROM CODEMAGIC
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.manuelweishaupt.stenorbulano  # <-- Put the Bundle ID without ""
+        bundle_identifier: com.porfirieoprea.ipyourtier  # <-- Put the Bundle ID without ""
       vars:
-        BUNDLE_ID: "com.manuelweishaupt.stenorbulano" # <-- Put the Bundle ID
-        XCODE_SCHEME: "StenorBulano" # <-- Put the name of your Xcode scheme HERE AND IN 29 !!!!!
-        APP_STORE_APPLE_ID: 6755245894 # <-- Put the Apple ID from Appstoreconnect
+        BUNDLE_ID: "com.porfirieoprea.ipyourtier" # <-- Put the Bundle ID
+        XCODE_SCHEME: "IPYourTier" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
+        APP_STORE_APPLE_ID: 6754879815 # <-- Put the Apple ID from Appstoreconnect
       xcode: latest
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
@@ -26,7 +26,7 @@ workflows:
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
-            --project "StenorBulano.xcodeproj" \
+            --project "IPYourTier.xcodeproj" \
             --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
@@ -36,10 +36,10 @@ workflows:
     publishing:
       app_store_connect:
         auth: integration
-        submit_to_app_store: false
+        submit_to_app_store: true
       email:
         recipients:
-          - nikolay.t@adforcegroup.com   # <-- Put the Email for getting info about result of Build
+          - derasik3000@adforcegroup.com   # <-- Put the Email for getting info about result of Build
         notify:
           success: true
           failure: true
