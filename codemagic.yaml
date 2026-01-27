@@ -4,15 +4,15 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m1
     integrations:
-      app_store_connect: "RankingLadder"
+      app_store_connect: "EndurancePlanner"
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.owennodd.urelrankingladder
+        bundle_identifier: com.emirhanbahyar.endurancepanner
       vars:
-        BUNDLE_ID: "com.owennodd.urelrankingladder"
-        XCODE_SCHEME: "UrBelRankingLadder"
-        APP_STORE_APPLE_ID: 6755522902
+        BUNDLE_ID: "com.emirhanbahyar.endurancepanner"
+        XCODE_SCHEME: "JoGitEndurancePlanner"
+        APP_STORE_APPLE_ID: 6755778922
       xcode: latest
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
@@ -26,7 +26,7 @@ workflows:
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
-            --project "UrBelRankingLadder.xcodeproj" \
+            --project "JoGitEndurancePlanner.xcodeproj" \
             --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
