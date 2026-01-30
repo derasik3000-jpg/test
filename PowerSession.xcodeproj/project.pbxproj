@@ -14,9 +14,22 @@
 		9D5C63832EC1B3FB00192BA7 /* PowerSession.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PowerSession.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CEFE9E6F2F2CC3040066291D /* Exceptions for "PowerSession" folder in "PowerSession" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 9D5C63822EC1B3FB00192BA7 /* PowerSession */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9D5C63852EC1B3FB00192BA7 /* PowerSession */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CEFE9E6F2F2CC3040066291D /* Exceptions for "PowerSession" folder in "PowerSession" target */,
+			);
 			path = PowerSession;
 			sourceTree = "<group>";
 		};
