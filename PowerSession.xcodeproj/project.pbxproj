@@ -14,22 +14,9 @@
 		9D5C63832EC1B3FB00192BA7 /* PowerSession.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PowerSession.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		3EADA9362F2B6AC7006DAD2E /* Exceptions for "PowerSession" folder in "PowerSession" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 9D5C63822EC1B3FB00192BA7 /* PowerSession */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9D5C63852EC1B3FB00192BA7 /* PowerSession */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				3EADA9362F2B6AC7006DAD2E /* Exceptions for "PowerSession" folder in "PowerSession" target */,
-			);
 			path = PowerSession;
 			sourceTree = "<group>";
 		};
@@ -279,7 +266,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PowerSession/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "CeDax:PowerSession";
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to the camera";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -317,7 +305,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PowerSession/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "CeDax:PowerSession";
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to the camera";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
