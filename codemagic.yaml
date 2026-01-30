@@ -4,15 +4,15 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m1
     integrations:
-      app_store_connect: "CR:The road to control"
+      app_store_connect: "Power"
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.miraskairatov.bhydrovigor
+        bundle_identifier: com.sinembekle.cedax
       vars:
-        BUNDLE_ID: "com.miraskairatov.bhydrovigor"
-        XCODE_SCHEME: "CR The road to control"
-        APP_STORE_APPLE_ID: 6755447559
+        BUNDLE_ID: "com.sinembekle.cedax"
+        XCODE_SCHEME: "PowerSession"
+        APP_STORE_APPLE_ID: 6755775383
       xcode: latest
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
@@ -26,7 +26,7 @@ workflows:
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
-            --project "CR The road to control.xcodeproj" \
+            --project "PowerSession.xcodeproj" \
             --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
