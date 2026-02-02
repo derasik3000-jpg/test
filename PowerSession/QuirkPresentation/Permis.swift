@@ -34,8 +34,8 @@ class AppsFlyerManager: NSObject, AppsFlyerLibDelegate {
     }
     
     // Запрос разрешения и старт с callback
-    func start(completion: (() -> Void)? = nil) {
-        initializationCallback = completion
+    func start(attCompletion: @escaping () -> Void, appsFlyerCompletion: (() -> Void)? = nil) {
+        initializationCallback = appsFlyerCompletion
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             guard let self = self else { return }
@@ -44,11 +44,20 @@ class AppsFlyerManager: NSObject, AppsFlyerLibDelegate {
                 ATTrackingManager.requestTrackingAuthorization { status in
                     print("ATT Status: \(status.rawValue)")
                     self.attStatusReceived = true
+                    // Вызываем completion после получения ответа ATT
+                    DispatchQueue.main.async {
+                        attCompletion()
+                    }
+                    // Затем запускаем AppsFlyer
                     AppsFlyerLib.shared().start()
                     NotificationCenter.default.post(name: NSNotification.Name("ATTStatusReceived"), object: nil)
                 }
             } else {
                 self.attStatusReceived = true
+                // Для iOS < 14 сразу вызываем completion
+                DispatchQueue.main.async {
+                    attCompletion()
+                }
                 AppsFlyerLib.shared().start()
             }
         }

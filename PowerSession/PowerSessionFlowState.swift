@@ -24,15 +24,7 @@ final class PowerFlowState: ObservableObject {
     func startFlow() {
         startTime = Date()
         
-        // STEP 1: Date Check (FIRST, BEFORE ANYTHING ELSE)
-        if !service.coachModCheckDatePublic() {
-            // Date check failed -> enforceNative = true -> Show Native App
-            print("❌ Date check failed - showing native app")
-            showMainAppAfterSplash()
-            return
-        }
-        
-        // Check flags for non-first launch
+        // Check flags for non-first launch (before ATT)
         if service.shouldEnforceNative() {
             print("ℹ️ enforceNative flag is true - showing native app")
             showMainAppAfterSplash()
@@ -46,26 +38,38 @@ final class PowerFlowState: ObservableObject {
             return
         }
         
-        // First launch - proceed with validations
-        handleFirstLaunch()
+        // First launch - start with ATT request
+        requestATT()
     }
     
-    private func handleFirstLaunch() {
-        print("🚀 First launch detected - starting validations")
+    private func requestATT() {
+        print("🔐 Starting ATT request")
         
-        // Start AppsFlyer
-        AppsFlyerManager.shared.start()
+        // Запрашиваем ATT, после получения ответа запускаем AppsFlyer
+        AppsFlyerManager.shared.start(
+            attCompletion: { [weak self] in
+                guard let self = self else { return }
+                print("✅ ATT response received - initializing AppsFlyer")
+                self.initializeAppsFlyer()
+            },
+            appsFlyerCompletion: nil
+        )
+    }
+    
+    private func initializeAppsFlyer() {
+        print("🚀 Initializing AppsFlyer")
         
-        // Wait for AppsFlyer data and then proceed
+        // Ждем инициализации AppsFlyer
         AppsFlyerManager.shared.waitForDataReady { [weak self] ready in
             guard let self = self else { return }
             
             if ready {
-                print("✅ AppsFlyer data ready")
+                print("✅ AppsFlyer initialized and data ready")
             } else {
                 print("⚠️ AppsFlyer data not ready, proceeding anyway")
             }
             
+            // После инициализации AppsFlyer делаем проверки
             self.proceedWithValidations()
         }
     }
@@ -73,6 +77,14 @@ final class PowerFlowState: ObservableObject {
     private func proceedWithValidations() {
         guard !validationsStarted else { return }
         validationsStarted = true
+        
+        // STEP 1: Date Check
+        if !service.coachModCheckDatePublic() {
+            print("❌ Date check failed - showing native app")
+            showMainAppAfterSplash()
+            return
+        }
+        
         // STEP 2: Device Check
         if !service.checkDevice() {
             print("❌ Device check failed (iPad) - showing native app")
@@ -95,7 +107,7 @@ final class PowerFlowState: ObservableObject {
                 guard let self = self else { return }
                 
                 if success, let url = url {
-                    print("✅ Server request successful - showing WebView")
+                    print("✅ All validations passed - showing WebView")
                     self.webViewURL = url
                     self.showWebViewAfterSplash()
                 } else {

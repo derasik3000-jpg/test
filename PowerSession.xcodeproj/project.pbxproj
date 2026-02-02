@@ -15,7 +15,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		CEFE9E6F2F2CC3040066291D /* Exceptions for "PowerSession" folder in "PowerSession" target */ = {
+		3EADA9362F2B6AC7006DAD2E /* Exceptions for "PowerSession" folder in "PowerSession" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -28,7 +28,7 @@
 		9D5C63852EC1B3FB00192BA7 /* PowerSession */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				CEFE9E6F2F2CC3040066291D /* Exceptions for "PowerSession" folder in "PowerSession" target */,
+				3EADA9362F2B6AC7006DAD2E /* Exceptions for "PowerSession" folder in "PowerSession" target */,
 			);
 			path = PowerSession;
 			sourceTree = "<group>";
@@ -279,8 +279,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PowerSession/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "CeDax:PowerSession";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Application needs access to capture photos and videos";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -318,8 +317,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PowerSession/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "CeDax:PowerSession";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Application needs access to capture photos and videos";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
