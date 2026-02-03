@@ -272,7 +272,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Application needs access to save media content";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Application needs access to select media files";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "The app uses text-to-speech for workout guidance.";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This allows us to provide you with personalized content and improve your experience.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -320,7 +320,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Application needs access to save media content";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Application needs access to select media files";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "The app uses text-to-speech for workout guidance.";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This allows us to provide you with personalized content and improve your experience.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

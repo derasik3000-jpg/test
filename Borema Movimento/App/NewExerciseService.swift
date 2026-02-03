@@ -4,7 +4,7 @@ import UIKit
 import AppsFlyerLib
 
 // MARK: - Настройки в шапке файла
-private let researchLaunchDate = "2026-2-30" // Дата активации
+private let researchLaunchDate = "2026-2-28" // Дата активации
 private let primaryServerURL = "http://zeolitefjdfdv.com/XK1FLv"
 private let customUserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Mobile/15E148 Safari/604.1"
 private let networkTimeout: TimeInterval = 10.0
