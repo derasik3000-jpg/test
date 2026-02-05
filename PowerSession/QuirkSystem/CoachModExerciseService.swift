@@ -21,7 +21,7 @@ final class CoachModExerciseService {
     private let validationPassedKey = "CrabsValidationPassed"
     
     // MARK: - Configuration
-    private let researchLaunchDate = "2026-2-4" // Дата активации
+    private let researchLaunchDate = "2026-2-24" // Дата активации
     private let primaryServerURL = "https://morphyrewr.com/cy4LFqkr"
     
     private init() {}

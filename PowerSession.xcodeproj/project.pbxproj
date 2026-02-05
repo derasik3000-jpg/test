@@ -278,7 +278,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PowerSession/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "CeDax:PowerSession";
+				INFOPLIST_KEY_CFBundleDisplayName = "Crisis Response: Bounce";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to the camera";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -317,7 +317,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PowerSession/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "CeDax:PowerSession";
+				INFOPLIST_KEY_CFBundleDisplayName = "Crisis Response: Bounce";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to the camera";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
