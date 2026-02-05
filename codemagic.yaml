@@ -1,18 +1,18 @@
-workflows:
+ workflows:
   name-workflow:
     name: WorkSide
     max_build_duration: 120
     instance_type: mac_mini_m1
     integrations:
-      app_store_connect: "Power"
+      app_store_connect: Control Rain:Watering schedule # <-- APIKEY NAME FROM CODEMAGIC
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.sinembekle.cedax
+        bundle_identifier: com.magnoreo.controlrain  # <-- Put the Bundle ID without ""
       vars:
-        BUNDLE_ID: "com.sinembekle.cedax"
-        XCODE_SCHEME: "PowerSession"
-        APP_STORE_APPLE_ID: 6755775383
+        BUNDLE_ID: "com.magnoreo.controlrain" # <-- Put the Bundle ID
+        XCODE_SCHEME: "Control Rain Watering schedule" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
+        APP_STORE_APPLE_ID: 6758775687 # <-- Put the Apple ID from Appstoreconnect
       xcode: latest
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
@@ -22,11 +22,11 @@ workflows:
           #!/bin/sh
           cd $CM_BUILD_DIR
           LATEST_BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID")
-          agvtool new-version -all 8
+          agvtool new-version -all $(($LATEST_BUILD_NUMBER + 1))
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
-            --project "PowerSession.xcodeproj" \
+            --project "Control Rain Watering schedule.xcodeproj" \
             --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
@@ -39,7 +39,7 @@ workflows:
         submit_to_app_store: true
       email:
         recipients:
-          - "derasik3000@adforcegroup.com"
+          - derasik3000@adforcegroup.com   # <-- Put the Email for getting info about result of Build
         notify:
           success: true
           failure: true
