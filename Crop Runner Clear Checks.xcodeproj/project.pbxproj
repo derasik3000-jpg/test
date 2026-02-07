@@ -159,7 +159,7 @@
 				INFOPLIST_FILE = Barn/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Current Run: Clear Checks ";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is required to use the app’s features.";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This app uses tracking to provide personalized content and improve your experience.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -198,7 +198,7 @@
 				INFOPLIST_FILE = Barn/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Current Run: Clear Checks ";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is required to use the app’s features.";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This app uses tracking to provide personalized content and improve your experience.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
