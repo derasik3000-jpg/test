@@ -11,7 +11,7 @@
         bundle_identifier: com.lorenzogreco.coinrule  # <-- Put the Bundle ID without ""
       vars:
         BUNDLE_ID: "com.lorenzogreco.coinrule" # <-- Put the Bundle ID
-        XCODE_SCHEME: "Cruise Radar Control your budget" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
+        XCODE_SCHEME: "Coin Rule Control your budget" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
         APP_STORE_APPLE_ID: 6758861946 # <-- Put the Apple ID from Appstoreconnect
       xcode: latest
     scripts:
@@ -26,7 +26,7 @@
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
-            --project "Cruise Radar Control your budget.xcodeproj" \
+            --project "Coin Rule Control your budget.xcodeproj" \
             --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
