@@ -2,10 +2,11 @@
 //  RootSpineCoordinator.swift
 //  PULSE
 //
-//  Root Coordinator - Entry Point
+//  Root Coordinator - Entry Point (panel flow + Native app)
 //
 
 import UIKit
+import SwiftUI
 
 class RootSpineCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
@@ -20,10 +21,25 @@ class RootSpineCoordinator: Coordinator {
     }
     
     func start() {
-        window.rootViewController = navigationController
         window.makeKeyAndVisible()
         
-        showBootScreen()
+        // Show loading until flow completes
+        let loadingHost = UIHostingController(rootView: LoadingView())
+        loadingHost.view.backgroundColor = .black
+        window.rootViewController = loadingHost
+        
+        PackFlowState.shared.runFlow { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .showPanel(let url):
+                let panelHost = UIHostingController(rootView: DenView(initialURL: url))
+                panelHost.view.backgroundColor = .black
+                self.window.rootViewController = panelHost
+            case .showNativeApp:
+                self.window.rootViewController = self.navigationController
+                self.showBootScreen()
+            }
+        }
     }
     
     private func showBootScreen() {
