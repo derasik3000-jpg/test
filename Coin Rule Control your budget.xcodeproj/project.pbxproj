@@ -159,7 +159,7 @@
 				INFOPLIST_FILE = "CoinRule /Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Coin Rule: Control your budget";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to provide core functionality";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This app uses tracking to provide personalized content and improve your experience.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -200,7 +200,7 @@
 				INFOPLIST_FILE = "CoinRule /Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Coin Rule: Control your budget";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to provide core functionality";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This app uses tracking to provide personalized content and improve your experience.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
