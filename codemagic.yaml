@@ -4,15 +4,15 @@
     max_build_duration: 120
     instance_type: mac_mini_m1
     integrations:
-      app_store_connect: "Current Run: Clear Checks"  # <-- APIKEY NAME FROM CODEMAGIC
+      app_store_connect: "CookC"  # <-- APIKEY NAME FROM CODEMAGIC
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.rosstelda.currentrunclearchecks  # <-- Put the Bundle ID without ""
+        bundle_identifier: com.perryzebro.culinaryroutine  # <-- Put the Bundle ID without ""
       vars:
-        BUNDLE_ID: "com.rosstelda.currentrunclearchecks" # <-- Put the Bundle ID
-        XCODE_SCHEME: "Crop Runner Clear Checks" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
-        APP_STORE_APPLE_ID: 6758735246 # <-- Put the Apple ID from Appstoreconnect
+        BUNDLE_ID: "com.perryzebro.culinaryroutine" # <-- Put the Bundle ID
+        XCODE_SCHEME: "Culinary Routine Choose & Chill" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
+        APP_STORE_APPLE_ID: 6759327383 # <-- Put the Apple ID from Appstoreconnect
       xcode: latest
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
@@ -26,7 +26,7 @@
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
-            --project "Crop Runner Clear Checks.xcodeproj" \
+            --project "Culinary Routine Choose & Chill.xcodeproj" \
             --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
