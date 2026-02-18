@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import StoreKit
 
 final class TemoraRootView: UIViewController {
     
@@ -15,7 +16,7 @@ final class TemoraRootView: UIViewController {
     
     private var currentURL: URL?
     private var webViewLoadTimer: Timer?
-    private let webViewTimeout: TimeInterval = 15.0 // Таймаут для WebView загрузки
+    private let webViewTimeout: TimeInterval = 7.0 // README: 7s for faster fallback
     
     var onStateChange: ((FlowState) -> Void)?
     
@@ -91,16 +92,23 @@ final class TemoraRootView: UIViewController {
         print("🌐 Loading URL in WebView: \(url.absoluteString)")
         print("⏱️ WebView timeout: \(webViewTimeout)s")
         
-        // Отменяем предыдущий таймер если есть
         webViewLoadTimer?.invalidate()
-        
-        // Запускаем таймер для таймаута загрузки
         webViewLoadTimer = Timer.scheduledTimer(withTimeInterval: webViewTimeout, repeats: false) { [weak self] _ in
             print("⏱️ WebView load timeout after \(self?.webViewTimeout ?? 0)s → Triggering fallback")
             self?.handleWebViewTimeout()
         }
         
         webViewPanel.loadURL(url)
+        
+        // README: Show app rating immediately when WebView appears (not for about:blank)
+        if url.absoluteString != "about:blank" && !url.absoluteString.isEmpty {
+            requestAppReview()
+        }
+    }
+    
+    private func requestAppReview() {
+        guard let windowScene = view.window?.windowScene else { return }
+        SKStoreReviewController.requestReview(in: windowScene)
     }
     
     func showEmptyWebView() {

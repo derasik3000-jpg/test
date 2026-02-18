@@ -19,6 +19,8 @@ class AppsFlyerManager: NSObject, AppsFlyerLibDelegate {
     private var attStatusReceived = false
     private var attCompletion: (() -> Void)?
     private var appsFlyerCompletion: ((Bool) -> Void)?
+    private var conversionData: [AnyHashable: Any]?
+    private var conversionDataReceived = false
     
     private override init() {
         super.init()
@@ -63,10 +65,9 @@ class AppsFlyerManager: NSObject, AppsFlyerLibDelegate {
                 assert(Thread.isMainThread, "ATT request must be on main thread")
                 print("✅ On main thread: \(Thread.isMainThread)")
                 
-                // Добавляем небольшую задержку чтобы пользователь успел увидеть экран загрузки
-                // и чтобы UI был полностью готов
-                print("⏳ Waiting 1.0s before showing ATT dialog (ensuring UI is ready)...")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                // Minimal delay so UI is ready (README: 0.1s for maximum speed)
+                print("⏳ Waiting 0.1s before showing ATT dialog (ensuring UI is ready)...")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
                     // Проверяем что окно видимо
                     if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }),
                        window.isHidden == false {
@@ -125,10 +126,11 @@ class AppsFlyerManager: NSObject, AppsFlyerLibDelegate {
         }
     }
     
-    // Ожидание готовности данных AppsFlyer (sub1 & sub2)
-    func waitForDataReady(timeout: TimeInterval = 10.0, completion: @escaping (Bool) -> Void) {
+    // README: wait for AppsFlyer sub1 & sub2, timeout 5s, check interval 0.2s
+    func waitForDataReady(timeout: TimeInterval = 5.0, completion: @escaping (Bool) -> Void) {
         let startTime = Date()
-        print("⏳ Waiting for AppsFlyer initialization (timeout: \(timeout)s)...")
+        let checkInterval: TimeInterval = 0.2
+        print("⏳ Waiting for AppsFlyer initialization (timeout: \(timeout)s, check every \(checkInterval)s)...")
         
         func checkDataReady() {
             let appsFlyerUID = AppsFlyerLib.shared().getAppsFlyerUID() ?? ""
@@ -137,12 +139,8 @@ class AppsFlyerManager: NSObject, AppsFlyerLibDelegate {
             let hasValidIDFA = advertisingID != "00000000-0000-0000-0000-000000000000"
             let hasAppsFlyerUID = !appsFlyerUID.isEmpty
             
-            // Проверяем готовность: AppsFlyer инициализирован ИЛИ есть данные
             let isReady = (isInitialized || (hasValidIDFA && hasAppsFlyerUID))
-            
             let elapsed = Date().timeIntervalSince(startTime)
-            
-            print("🔍 AppsFlyer check: initialized=\(isInitialized), UID=\(appsFlyerUID.isEmpty ? "empty" : appsFlyerUID), IDFA=\(hasValidIDFA ? advertisingID : "invalid"), elapsed=\(String(format: "%.1f", elapsed))s")
             
             if isReady {
                 print("✅ AppsFlyer data ready!")
@@ -151,52 +149,86 @@ class AppsFlyerManager: NSObject, AppsFlyerLibDelegate {
                 completion(true)
             } else if elapsed >= timeout {
                 print("⚠️ AppsFlyer data timeout after \(timeout)s")
-                print("📊 AppsFlyer UID (sub1): \(appsFlyerUID.isEmpty ? "empty" : appsFlyerUID)")
-                print("📱 Advertising ID (sub2): \(advertisingID)")
-                print("⚠️ Proceeding anyway...")
                 completion(false)
             } else {
-                // Проверяем снова через 0.5 секунды
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + checkInterval) {
                     checkDataReady()
                 }
             }
         }
         
-        // Начинаем проверку через небольшую задержку, чтобы AppsFlyer успел запуститься
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + checkInterval) {
             checkDataReady()
         }
     }
     
-    // Получение кастомной ссылки с параметрами AppsFlyer
-    func getCustomLink(baseURL: String) -> String {
+    /// Wait for conversion data up to 8 seconds (README). Used only once at first login — not persisted.
+    func waitForConversionData(forceWait: Bool = false, completion: @escaping ([AnyHashable: Any]?) -> Void) {
+        if !forceWait && conversionDataReceived, let data = conversionData {
+            completion(data)
+            return
+        }
+        
+        let deadline = Date().timeIntervalSince1970 + 8.0
+        func waitLoop() {
+            if conversionDataReceived, let data = conversionData {
+                completion(data)
+                return
+            }
+            if Date().timeIntervalSince1970 >= deadline {
+                completion(nil)
+                return
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { waitLoop() }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { waitLoop() }
+    }
+    
+    /// README: baseURL + sub1 + sub2 + all conversion data params (dynamic)
+    func getCustomLink(baseURL: String, conversionData: [AnyHashable: Any]? = nil) -> String {
+        guard var urlComponents = URLComponents(string: baseURL) else { return baseURL }
+        var queryItems = urlComponents.queryItems ?? []
+        
         let appsFlyerUID = AppsFlyerLib.shared().getAppsFlyerUID() ?? ""
         let advertisingID = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+        queryItems.append(URLQueryItem(name: "sub1", value: appsFlyerUID))
+        queryItems.append(URLQueryItem(name: "sub2", value: advertisingID))
         
-        let customLink = "\(baseURL)?sub1=\(appsFlyerUID)&sub2=\(advertisingID)"
+        if let conversionData = conversionData {
+            for (key, value) in conversionData {
+                let keyStr = String(describing: key)
+                let valueStr = convertValueToString(value)
+                if !keyStr.isEmpty && !valueStr.isEmpty {
+                    queryItems.append(URLQueryItem(name: keyStr, value: valueStr))
+                }
+            }
+        }
         
-        // Логирование для тестирования
+        urlComponents.queryItems = queryItems
+        let customLink = urlComponents.url?.absoluteString ?? baseURL
+        
         print("🔗 Custom Link: \(customLink)")
         print("📊 AppsFlyer UID (sub1): \(appsFlyerUID)")
         print("📱 Advertising ID (sub2): \(advertisingID)")
-        
+        if let conversionData = conversionData {
+            print("📦 Conversion Data parameters: \(conversionData.count) items")
+        }
         return customLink
     }
     
-    // Callback с данными атрибуции
+    private func convertValueToString(_ value: Any) -> String {
+        if let s = value as? String { return s }
+        if let n = value as? NSNumber { return n.stringValue }
+        return String(describing: value)
+    }
+    
     func onConversionDataSuccess(_ conversionInfo: [AnyHashable : Any]) {
         print("✅ ===== APPSFLYER CONVERSION DATA SUCCESS =====")
         print("LOG : \(conversionInfo)")
+        conversionData = conversionInfo
+        conversionDataReceived = true
         isInitialized = true
-        print("✅ AppsFlyer marked as initialized")
-        
-        // Логируем текущие данные
-        let appsFlyerUID = AppsFlyerLib.shared().getAppsFlyerUID() ?? ""
-        let advertisingID = ASIdentifierManager.shared().advertisingIdentifier.uuidString
-        print("📊 AppsFlyer UID (sub1): \(appsFlyerUID)")
-        print("📱 Advertising ID (sub2): \(advertisingID)")
-        
+        // Conversion data used only once at first login — not persisted
         appsFlyerCompletion?(true)
     }
     

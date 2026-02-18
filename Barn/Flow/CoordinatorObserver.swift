@@ -17,16 +17,13 @@ class CoordinatorObserver {
     
     func handleWebViewError(_ error: Error) {
         print("❌ WebView error: \(error.localizedDescription)")
-        
-        // Check if it's a network error
+        // README: Always fallback (then empty WebView if needed), never Native App on error
         if isNetworkError(error) {
             print("🔄 Network error detected → Triggering fallback")
-            flowState.handleWebViewError()
         } else {
-            print("❌ Non-network error → Show Native App")
-            CoachModExerciseService.shared.setEnforceNative(true)
-            flowState.handleWebViewError()
+            print("🔄 Error detected → Triggering fallback")
         }
+        flowState.handleWebViewError()
     }
     
     func handle404Error() {

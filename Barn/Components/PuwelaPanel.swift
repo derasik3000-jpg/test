@@ -40,6 +40,7 @@ final class PuwelaPanel: UIView {
         webView.customUserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.6 Mobile/15E148 Safari/604.1"
         webView.backgroundColor = .black
         webView.scrollView.backgroundColor = .black
+        webView.allowsBackForwardNavigationGestures = true
         webView.navigationDelegate = self
         webView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -71,7 +72,7 @@ final class PuwelaPanel: UIView {
         let script = """
         (function() {
             var title = document.title.toLowerCase();
-            var bodyText = document.body.innerText.toLowerCase();
+            var bodyText = document.body ? document.body.innerText.toLowerCase() : '';
             var is404 = title.includes('404') || 
                        bodyText.includes('404') || 
                        bodyText.includes('not found');

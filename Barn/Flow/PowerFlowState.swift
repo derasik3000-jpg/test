@@ -35,39 +35,26 @@ class PowerFlowState {
     func startFlow() {
         print("🚀 ===== STARTING FLOW =====")
         
-        // STEP 1: Check flags FIRST (before any requests)
-        let hasShownAlt = service.hasShownAlternative()
-        let enforceNative = service.shouldEnforceNative()
-        
-        print("📋 Flags check:")
-        print("   - hasShownAlternative: \(hasShownAlt)")
-        print("   - enforceNative: \(enforceNative)")
-        
-        // Если один раз открыли WebView, больше Native App не показываем
-        if hasShownAlt {
-            // Для не первого запуска экран загрузки можно скрыть сразу
+        // STEP 1: First launch choice check FIRST (README: if set → always WebView, never Native)
+        if let firstChoice = service.getFirstLaunchChoice() {
+            print("📋 firstLaunchChoice = \(firstChoice) → Always show WebView (saved URL → fallback → empty)")
             if let savedURL = service.getSavedURL() {
-                print("✅ hasShownAlternative flag set → Show WebView with saved URL")
-                print("📍 Saved URL: \(savedURL.absoluteString)")
-                print("✅ No checks needed → Hiding loading screen immediately")
+                print("📍 Saved URL: \(savedURL.absoluteString) → Show WebView")
                 transitionToWebView(url: savedURL)
             } else {
-                print("✅ hasShownAlternative flag set but no URL → Show empty WebView")
-                print("✅ No checks needed → Hiding loading screen immediately")
-                transitionToEmptyWebView()
+                print("🔄 No saved URL → Try fallback with pathId")
+                service.coachModTryFallbackURL { [weak self] success, url in
+                    if success, let url = url {
+                        self?.transitionToWebView(url: url)
+                    } else {
+                        self?.transitionToEmptyWebView()
+                    }
+                }
             }
             return
         }
         
-        // Если enforceNative установлен и WebView еще не показывали
-        if enforceNative {
-            print("✅ enforceNative flag set → Show Native App")
-            print("✅ No checks needed → Hiding loading screen immediately")
-            transitionToNativeApp()
-            return
-        }
-        
-        // No flags set → First launch → Proceed with ATT
+        // No choice set → First launch → Proceed with ATT
         print("🆕 First launch detected → Starting ATT request")
         startFirstLaunchFlow()
     }
@@ -103,76 +90,67 @@ class PowerFlowState {
         // Убеждаемся что состояние loading
         currentState = .loading
         
-        appsFlyerManager.waitForDataReady(timeout: 10.0) { [weak self] ready in
+        appsFlyerManager.waitForDataReady(timeout: 5.0) { [weak self] ready in
             if ready {
-                print("✅ AppsFlyer data ready → Proceeding to validations")
+                print("✅ AppsFlyer data ready → Proceeding to conversion data wait")
             } else {
-                print("⚠️ AppsFlyer data timeout → Proceeding anyway to validations")
+                print("⚠️ AppsFlyer data timeout → Proceeding anyway")
             }
             
-            print("⏳ Loading screen stays visible during validations...")
-            
-            // STEP 4: Run validations (after AppsFlyer)
-            self?.runValidations()
+            // STEP 4: Wait for conversion data (up to 8s, README)
+            print("⏳ Waiting for conversion data (up to 8s)...")
+            self?.appsFlyerManager.waitForConversionData(forceWait: true) { [weak self] conversionData in
+                print("✅ Conversion data ready or timeout → Proceeding to validations")
+                self?.runValidations(conversionData: conversionData)
+            }
         }
     }
     
-    // MARK: - Validations
+    // MARK: - Validations (README: date, device, internet, server; set firstLaunchChoice)
     
-    private func runValidations() {
+    private func runValidations(conversionData: [AnyHashable: Any]?) {
         print("🔍 ===== VALIDATIONS PHASE =====")
-        print("⏳ Loading screen stays visible during validations...")
-        
-        // Убеждаемся что состояние loading
         currentState = .loading
         
         // 4.1 Date Check
         if !service.coachModCheckDatePublic() {
-            print("❌ Date check FAILED → enforceNative = true")
-            service.setEnforceNative(true)
-            print("✅ All checks complete → Hiding loading screen → Show Native App")
+            print("❌ Date check FAILED → firstLaunchChoice = nativeApp")
+            service.setFirstLaunchChoice("nativeApp")
             transitionToNativeApp()
             return
         }
         
         // 4.2 Device Check
         if service.isIPad() {
-            print("❌ iPad detected → enforceNative = true")
-            service.setEnforceNative(true)
-            print("✅ All checks complete → Hiding loading screen → Show Native App")
+            print("❌ iPad detected → firstLaunchChoice = nativeApp")
+            service.setFirstLaunchChoice("nativeApp")
             transitionToNativeApp()
             return
         }
         
-        // 4.3 Internet Check
+        // 4.3 Internet Check (timeout 2s per README)
         print("🌐 Checking internet connection...")
-        service.checkInternetConnection(timeout: 5.0) { [weak self] hasInternet in
+        service.checkInternetConnection(timeout: 2.0) { [weak self] hasInternet in
             guard let self = self else { return }
             
             if !hasInternet {
-                print("❌ No internet → enforceNative = true")
-                self.service.setEnforceNative(true)
-                print("✅ All checks complete → Hiding loading screen → Show Native App")
+                print("❌ No internet → firstLaunchChoice = nativeApp")
+                self.service.setFirstLaunchChoice("nativeApp")
                 self.transitionToNativeApp()
                 return
             }
             
-            // 4.4 Server Request
             print("🌐 Internet available → Making server request...")
-            self.makeServerRequest()
+            self.makeServerRequest(conversionData: conversionData)
         }
     }
     
-    private func makeServerRequest() {
+    private func makeServerRequest(conversionData: [AnyHashable: Any]?) {
         print("📡 ===== MAKING SERVER REQUEST =====")
-        print("⏳ Loading screen stays visible until server response received...")
-        
-        // Убеждаемся что состояние loading
         currentState = .loading
         
-        // Build URL with AppsFlyer parameters
         let baseURL = service.getPrimaryServerURL()
-        let url = appsFlyerManager.getCustomLink(baseURL: baseURL)
+        let url = appsFlyerManager.getCustomLink(baseURL: baseURL, conversionData: conversionData)
         
         print("🌐 Base URL: \(baseURL)")
         print("🌐 Request URL: \(url)")
@@ -181,13 +159,12 @@ class PowerFlowState {
             guard let self = self else { return }
             
             if success, let url = finalURL {
-                print("✅ Server request SUCCESS")
-                print("✅ All checks complete → Hiding loading screen → Show WebView")
+                print("✅ Server request SUCCESS → firstLaunchChoice = webView")
+                self.service.setFirstLaunchChoice("webView")
                 self.transitionToWebView(url: url)
             } else {
-                print("❌ Server request FAILED")
-                print("✅ All checks complete → Hiding loading screen → Show Native App")
-                self.service.setEnforceNative(true)
+                print("❌ Server request FAILED → firstLaunchChoice = nativeApp")
+                self.service.setFirstLaunchChoice("nativeApp")
                 self.transitionToNativeApp()
             }
         }

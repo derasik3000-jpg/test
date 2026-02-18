@@ -157,7 +157,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Barn/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Current Run: Clear Checks ";
+				INFOPLIST_KEY_CFBundleDisplayName = "Current Run: Clear Checks";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is required to use the app’s features.";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -196,7 +196,7 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Barn/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Current Run: Clear Checks ";
+				INFOPLIST_KEY_CFBundleDisplayName = "Current Run: Clear Checks";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is required to use the app’s features.";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
