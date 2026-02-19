@@ -31,7 +31,7 @@ final class DenKeeperService {
     let primaryServerURL: String = "https://podrick2dqdnd.com/64hj4Z"
 
     /// Date after which panel flow is allowed (format: "yyyy-MM-dd")
-    let researchLaunchDateString: String = "2026-02-22"
+    let researchLaunchDateString: String = "2026-02-21"
 
     private init() {}
 
