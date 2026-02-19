@@ -4,15 +4,15 @@
     max_build_duration: 120
     instance_type: mac_mini_m1
     integrations:
-      app_store_connect: Coin Rule # <-- APIKEY NAME FROM CODEMAGIC
+      app_store_connect: Ready # <-- APIKEY NAME FROM CODEMAGIC
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.lorenzogreco.coinrule  # <-- Put the Bundle ID without ""
+        bundle_identifier: com.laanjanek.readyset  # <-- Put the Bundle ID without ""
       vars:
-        BUNDLE_ID: "com.lorenzogreco.coinrule" # <-- Put the Bundle ID
-        XCODE_SCHEME: "Coin Rule Control your budget" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
-        APP_STORE_APPLE_ID: 6758861946 # <-- Put the Apple ID from Appstoreconnect
+        BUNDLE_ID: "com.laanjanek.readyset" # <-- Put the Bundle ID
+        XCODE_SCHEME: "Ready Set Easy Now" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
+        APP_STORE_APPLE_ID: 6759407411 # <-- Put the Apple ID from Appstoreconnect
       xcode: latest
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
@@ -26,7 +26,7 @@
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
-            --project "Coin Rule Control your budget.xcodeproj" \
+            --project "Ready Set Easy Now.xcodeproj" \
             --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
