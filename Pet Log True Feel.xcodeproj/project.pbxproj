@@ -256,7 +256,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Pet Log: True Feel";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Optional: Add photos to symptom episodes to share with your vet.";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This app does not track you across other apps or websites.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -296,7 +296,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Pet Log: True Feel";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Optional: Add photos to symptom episodes to share with your vet.";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This app does not track you across other apps or websites.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
