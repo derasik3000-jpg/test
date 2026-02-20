@@ -4,15 +4,15 @@
     max_build_duration: 120
     instance_type: mac_mini_m1
     integrations:
-      app_store_connect: Tempo Map:Energy Route # <-- APIKEY NAME FROM CODEMAGIC
+      app_store_connect: maxbahr # <-- APIKEY NAME FROM CODEMAGIC
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.arturobella.tempomapenergy  # <-- Put the Bundle ID without ""
+        bundle_identifier: com.maxbahr.petlogtruefeel  # <-- Put the Bundle ID without ""
       vars:
-        BUNDLE_ID: "com.arturobella.tempomapenergy" # <-- Put the Bundle ID
-        XCODE_SCHEME: "Tempo Map Energy Route" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
-        APP_STORE_APPLE_ID: 6759445158 # <-- Put the Apple ID from Appstoreconnect
+        BUNDLE_ID: "com.maxbahr.petlogtruefeel" # <-- Put the Bundle ID
+        XCODE_SCHEME: "Pet Log True Feel" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
+        APP_STORE_APPLE_ID: 6759450647 # <-- Put the Apple ID from Appstoreconnect
       xcode: latest
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
@@ -26,7 +26,7 @@
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
-            --project "Tempo Map Energy Route.xcodeproj" \
+            --project "Pet Log True Feel.xcodeproj" \
             --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
