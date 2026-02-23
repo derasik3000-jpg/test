@@ -159,7 +159,7 @@
 				INFOPLIST_FILE = "Culinary Routine Choose & Chill/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Culinary Routine:Choose&Chill";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to the camera to take photos";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "We protect your privacy and use information only to enhance app performance";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
@@ -202,7 +202,7 @@
 				INFOPLIST_FILE = "Culinary Routine Choose & Chill/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Culinary Routine:Choose&Chill";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to the camera to take photos";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "We protect your privacy and use information only to enhance app performance";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
