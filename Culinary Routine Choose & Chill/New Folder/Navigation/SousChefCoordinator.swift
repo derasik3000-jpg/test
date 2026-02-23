@@ -38,8 +38,13 @@ final class SousChefCoordinator {
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     /// Entry point called from SceneDelegate.
-    func openKitchen() {
-        showSplash()
+    /// - Parameter skipSplash: If true, skip splash and go directly to onboarding/main (used when coming from WebView flow).
+    func openKitchen(skipSplash: Bool = false) {
+        if skipSplash {
+            decidePath()
+        } else {
+            showSplash()
+        }
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

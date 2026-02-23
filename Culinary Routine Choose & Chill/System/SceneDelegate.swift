@@ -1,12 +1,36 @@
 // ──────────────────────────────────────────────
 // SceneDelegate.swift
-// с8 – "Menu of 12 Dishes"
+// Culinary Routine Choose & Chill
 //
-// Creates the UIWindow, forces dark appearance,
-// and hands control to SousChefCoordinator.
+// Creates the UIWindow, forces dark appearance.
+// WebView flow: KitchenRootView → WebView or Native App.
+// Native App: SousChefCoordinator (onboarding / main tabs).
 // ──────────────────────────────────────────────
 
 import UIKit
+import SwiftUI
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MARK: - KitchenHostingController
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+/// Hosting controller that respects AppOrientationState for rotation.
+final class KitchenHostingController<Content: View>: UIHostingController<Content> {
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        AppOrientationState.isWebViewShowing
+            ? [.portrait, .landscapeLeft, .landscapeRight]
+            : .portrait
+    }
+
+    override var shouldAutorotate: Bool {
+        AppOrientationState.isWebViewShowing
+    }
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MARK: - SceneDelegate
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -14,8 +38,14 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-    /// The root coordinator that owns the entire navigation flow.
+    /// Flow controller for WebView / Native App decision.
+    private var flowController: KitchenFlowController?
+
+    /// Coordinator for native app (onboarding, main tabs).
     private var headChef: SousChefCoordinator?
+
+    /// Prevents double transition when onAppear fires multiple times.
+    private var hasTransitionedToNative = false
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     // MARK: - Scene Lifecycle
@@ -30,17 +60,44 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // 1. Create window
         let pane = UIWindow(windowScene: windowScene)
-        pane.overrideUserInterfaceStyle = .dark  // always dark
+        pane.overrideUserInterfaceStyle = .dark
         pane.tintColor = SaffronPalette.honeyComb
+        pane.backgroundColor = .clear
 
-        // 2. Create & start coordinator
-        let coordinator = SousChefCoordinator(window: pane)
-        headChef = coordinator
-        coordinator.openKitchen()
+        // 2. WebView flow: KitchenRootView first
+        let controller = KitchenFlowController()
+        flowController = controller
 
-        // 3. Show
+        let rootView = KitchenRootView(
+            flowController: controller,
+            onNativeAppRequested: { [weak self] in
+                self?.transitionToNativeApp()
+            }
+        )
+
+        let hosting = KitchenHostingController(rootView: rootView)
+        hosting.view.backgroundColor = .clear
+        pane.rootViewController = hosting
+
+        // 3. Start flow (ATT → AppsFlyer → validations)
+        controller.startFlow()
+
+        // 4. Show
         self.window = pane
         pane.makeKeyAndVisible()
+    }
+
+    /// Transition to native app (onboarding or main tabs).
+    private func transitionToNativeApp() {
+        guard !hasTransitionedToNative else { return }
+        guard let pane = window else { return }
+
+        hasTransitionedToNative = true
+        print("🔄 [Orientation] transitionToNativeApp | setting isWebViewShowing = false")
+        AppOrientationState.isWebViewShowing = false
+        let coordinator = SousChefCoordinator(window: pane)
+        headChef = coordinator
+        coordinator.openKitchen(skipSplash: true)
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

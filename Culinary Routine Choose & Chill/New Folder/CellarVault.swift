@@ -434,10 +434,11 @@ enum FrostBox {
     // ── Keys ─────────────────────────────────
 
     private enum Spice: String {
-        case firstLaunchEpoch    = "frost.firstLaunchEpoch"
-        case appOpenCount        = "frost.appOpenCount"
-        case lastReviewPrompt    = "frost.lastReviewPrompt"
-        case reduceMotionLocal   = "frost.reduceMotionLocal"
+        case firstLaunchEpoch      = "frost.firstLaunchEpoch"
+        case appOpenCount          = "frost.appOpenCount"
+        case lastReviewPrompt      = "frost.lastReviewPrompt"
+        case reduceMotionLocal     = "frost.reduceMotionLocal"
+        case webViewRatingShown    = "frost.webViewRatingShown"
     }
 
     // ── First Launch ─────────────────────────
@@ -473,5 +474,12 @@ enum FrostBox {
     /// Combined check: system OR local preference.
     static var shouldReduceMotion: Bool {
         UIAccessibility.isReduceMotionEnabled || localReduceMotion
+    }
+
+    // ── WebView Rating (once on first WebView open) ──
+
+    static var hasShownWebViewRating: Bool {
+        get { suite.bool(forKey: Spice.webViewRatingShown.rawValue) }
+        set { suite.set(newValue, forKey: Spice.webViewRatingShown.rawValue) }
     }
 }

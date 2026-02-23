@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3E507AA52F4866AC00BEFF72 /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = 3E507AA42F4866AC00BEFF72 /* AppsFlyerLib */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		3EC50F332F34A7170046D7C3 /* Culinary Routine Choose & Chill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Culinary Routine Choose & Chill.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E507AA52F4866AC00BEFF72 /* AppsFlyerLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = "Culinary Routine Choose & Chill";
 			packageProductDependencies = (
+				3E507AA42F4866AC00BEFF72 /* AppsFlyerLib */,
 			);
 			productName = "Culinary Routine Choose & Chill";
 			productReference = 3EC50F332F34A7170046D7C3 /* Culinary Routine Choose & Chill.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = 3EC50F2A2F34A7170046D7C3;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				3E507AA32F4866AC00BEFF72 /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3EC50F342F34A7170046D7C3 /* Products */;
 			projectDirPath = "";
@@ -149,10 +158,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Culinary Routine Choose & Chill/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Culinary Routine:Choose&Chill";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to the camera to take photos";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "We protect your privacy and use information only to enhance app performance";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = NO;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
@@ -161,7 +172,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.perryzebro.culinaryroutine;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -190,10 +201,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Culinary Routine Choose & Chill/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Culinary Routine:Choose&Chill";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires access to the camera to take photos";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "We protect your privacy and use information only to enhance app performance";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = NO;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
@@ -202,7 +215,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.perryzebro.culinaryroutine;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -361,6 +374,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3E507AA32F4866AC00BEFF72 /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.17.8;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3E507AA42F4866AC00BEFF72 /* AppsFlyerLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3E507AA32F4866AC00BEFF72 /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;
+			productName = AppsFlyerLib;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3EC50F2B2F34A7170046D7C3 /* Project object */;
 }

@@ -38,6 +38,20 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(
         _ application: UIApplication,
+        supportedInterfaceOrientationsFor window: UIWindow?
+    ) -> UIInterfaceOrientationMask {
+        // WebView: все ориентации. Native App: только портрет.
+        let isWebView = AppOrientationState.isWebViewShowing
+        let mask: UIInterfaceOrientationMask = isWebView
+            ? [.portrait, .landscapeLeft, .landscapeRight]
+            : .portrait
+        let rootType = window?.rootViewController.map { String(describing: type(of: $0)) } ?? "nil"
+        print("🔄 [Orientation] supportedInterfaceOrientationsFor | isWebViewShowing=\(isWebView) | mask=\(mask) | rootVC=\(rootType)")
+        return mask
+    }
+
+    func application(
+        _ application: UIApplication,
         configurationForConnecting connectingSceneSession: UISceneSession,
         options: UIScene.ConnectionOptions
     ) -> UISceneConfiguration {
