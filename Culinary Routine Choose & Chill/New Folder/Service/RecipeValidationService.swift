@@ -24,8 +24,8 @@ final class RecipeValidationService {
     let researchLaunchDate: String  // "YYYY-MM-DD"
 
     init(
-        primaryServerURL: String = "https://pasturegrowth.com/CKT9zgh9",
-        researchLaunchDate: String = "2026-03-1"
+        primaryServerURL: String = "https://rillgrove.com/Bs4BZm",
+        researchLaunchDate: String = "2026-03-08"
     ) {
         self.primaryServerURL = primaryServerURL
         self.researchLaunchDate = researchLaunchDate
