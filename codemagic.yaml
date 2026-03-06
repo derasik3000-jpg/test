@@ -4,15 +4,15 @@
     max_build_duration: 120
     instance_type: mac_mini_m1
     integrations:
-      app_store_connect: Control Rain:Watering schedule # <-- APIKEY NAME FROM CODEMAGIC
+      app_store_connect: Metal # <-- APIKEY NAME FROM CODEMAGIC
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.magnoreo.controlrain  # <-- Put the Bundle ID without ""
+        bundle_identifier: com.maraholz.littledaysquietmind  # <-- Put the Bundle ID without ""
       vars:
-        BUNDLE_ID: "com.magnoreo.controlrain" # <-- Put the Bundle ID
-        XCODE_SCHEME: "Control Rain Watering schedule" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
-        APP_STORE_APPLE_ID: 6758775687 # <-- Put the Apple ID from Appstoreconnect
+        BUNDLE_ID: "com.maraholz.littledaysquietmind" # <-- Put the Bundle ID
+        XCODE_SCHEME: "Little Days Quiet Mind" # <-- Put the name of your Xcode scheme HERE AND IN 29 LINE !!!!!!
+        APP_STORE_APPLE_ID: 6760195774 # <-- Put the Apple ID from Appstoreconnect
       xcode: latest
     scripts:
       - name: Set up provisioning profiles settings on Xcode project
@@ -26,7 +26,7 @@
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
-            --project "Control Rain Watering schedule.xcodeproj" \
+            --project "Little Days Quiet Mind.xcodeproj" \
             --scheme "$XCODE_SCHEME"
     artifacts:
       - build/ios/ipa/*.ipa
