@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "gggg.png",
+      "filename" : "Metallica 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "gggg 1.png",
+      "filename" : "Metallica 3.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,7 +25,7 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "gggg 2.png",
+      "filename" : "Metallica 4.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
